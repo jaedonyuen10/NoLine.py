@@ -8,6 +8,7 @@ import sys
 print("sys imported")
 import tkinter as tk
 from tkinter.filedialog import askopenfilename
+from tkinter.filedialog import asksaveasfilename
 print("tkinker imported, renamed to tk")
 datetime.datetime.now()
 datetime.datetime(2009, 1, 6, 15, 8, 24, 78915)
@@ -244,14 +245,22 @@ if Pin == SelectedPin:
             print(" ")
         elif command == "tk":
             print(" ")
+            def testButtn():
+                print(entry.get())
             print("Summoning tkinter GUI window")
             window = tk.Tk()
-    
+            window.title = "NoLine tk enviroment"
             title = tk.Label(text="NoLine")
             entry = tk.Entry()
+            button = tk.Button(text = "Ok",command = testButtn)
             title.pack()
             entry.pack()
+            button.pack()
             window.mainloop()
+        elif command == "tkGrid":
+            print(" ")
+            print("unfinished")
+
         elif command == "tkNotepad":
              npContent = ""
              def open_file():
@@ -266,26 +275,19 @@ if Pin == SelectedPin:
                     text = input_file.read()
                     textBox.insert(tk.END, text)
 
-             def save_file(event):
-                print("Saving")
-                content = text_box.get(1.0,tk.END)
-                window.destroy()
-                name = input("Choose directory name >")
-                print(" ")
-                print("The filename will be " + name + ".txt")
-                print(" ")
-                newF = open(name + ".txt","x")
-                newF.write(content)
-                newF.close()
-                print("Content has been saved.")
-                print(" ")
-                print("Content:")
-                f = open(name + ".txt","r")
-                print(f.read())
-                print(" ")
-                input("Waiting for an input so the OS can close the file...>")
-                newF.close()   
-                
+             def save_file():
+                """Save the current file as a new file."""
+                filepath = asksaveasfilename(
+                    defaultextension="txt",
+                    filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")],
+                )
+                if not filepath:
+                    return
+                with open(filepath, "w") as output_file:
+                    text = textBox.get(1.0, tk.END)
+                    output_file.write(text)
+                    print("Saved to " + filepath)
+                    
   
              window = tk.Tk()
              window.title("NoLine tkNotepad")
@@ -306,6 +308,10 @@ if Pin == SelectedPin:
 
             
              window.mainloop()
+             print("closed")
+             print(" ")
+        
+
         elif command == "whatsNew":
             print("as of [2021-8-1][ver 0.6]")
             print("this command you are using has been added.")
