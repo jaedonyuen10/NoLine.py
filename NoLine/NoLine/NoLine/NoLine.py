@@ -7,6 +7,7 @@ print("os imported")
 import sys 
 print("sys imported")
 import tkinter as tk
+from tkinter.filedialog import askopenfilename
 print("tkinker imported, renamed to tk")
 datetime.datetime.now()
 datetime.datetime(2009, 1, 6, 15, 8, 24, 78915)
@@ -253,17 +254,19 @@ if Pin == SelectedPin:
             window.mainloop()
         elif command == "tkNotepad":
              npContent = ""
-             window = tk.Tk()
-             window.title("NoLine tkNotepad")
-             window.rowconfigure(0, minsize=800, weight=1)
-             window.columnconfigure(1, minsize=800, weight=1)
-             fr_buttons = tk.Frame(window,bg="black")
-             saveBttn = tk.Button(fr_buttons,text = "Save",fg="white",bg="#3d3d3d")
-             text_box = tk.Text(window,fg="white",bg="black")
-             fr_buttons.grid(row=0, column=0, sticky="ns")
-             saveBttn.grid(row=1, column=0, sticky="ew", padx=5)
-             text_box.grid(row=0, column=1, sticky="nsew")
-             def handle_click(event):
+             def open_file():
+                """Open a file for editing."""
+                filepath = askopenfilename(
+                filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")]
+                )
+                if not filepath:
+                    return
+                textBox.delete("1.0", tk.END)
+                with open(filepath, "r") as input_file:
+                    text = input_file.read()
+                    textBox.insert(tk.END, text)
+
+             def save_file(event):
                 print("Saving")
                 content = text_box.get(1.0,tk.END)
                 window.destroy()
@@ -281,18 +284,34 @@ if Pin == SelectedPin:
                 print(f.read())
                 print(" ")
                 input("Waiting for an input so the OS can close the file...>")
-                newF.close()
+                newF.close()   
+                
+  
+             window = tk.Tk()
+             window.title("NoLine tkNotepad")
+             window.rowconfigure(0, minsize=800, weight=1)
+             window.columnconfigure(1, minsize=800, weight=1)
+             frbuttons = tk.Frame(window,bg="black")
+             openButtn = tk.Button(frbuttons, text="Open",fg="white",bg="#3d3d3d",command = open_file)
+             saveBttn = tk.Button(frbuttons,text = "Save",fg="white",bg="#3d3d3d",command = save_file)
+             textBox = tk.Text(window,fg="white",bg="black")
+             frbuttons.grid(row=0, column=0, sticky="ns")
+             openButtn.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
+             saveBttn.grid(row=1, column=0, sticky="ew", padx=5)
+             textBox.grid(row=0, column=1, sticky="nsew")
+             
 
 
 
 
-             saveBttn.bind("<Button-1>", handle_click)
+            
              window.mainloop()
         elif command == "whatsNew":
             print("as of [2021-8-1][ver 0.6]")
             print("this command you are using has been added.")
             print("tkNotepad has been added. <help> for more info!")
             print("bug fixes. (like crashing when opening a non-exsistant file)")
+            print("tkNotepad Improved")
             print(" ")
         elif command == "exit":
             print("exiting...")
