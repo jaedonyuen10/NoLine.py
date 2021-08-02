@@ -13,8 +13,9 @@ print("tkinker imported, renamed to tk")
 datetime.datetime.now()
 datetime.datetime(2009, 1, 6, 15, 8, 24, 78915)
 helpUseage = 0
-
+NoLineVer = "(bug fix ver 2)]"
 print(" ")
+print("[NoLine ver " + NoLineVer)
 SelectedPin = "0000"
 
 Pin = input("Enter Pin >")
@@ -44,7 +45,7 @@ if Pin == SelectedPin:
                 print("customAppend - works like customWrite, but instead of overwriting the file, it appends to it (all files found in the folder this os is in)")
                 print("customCreate - creates a new .txt document for you to put content in (the new faile will be in the same folder as the OS)")
                 print("customRemove - removes a file, USE AT YOUR OWN RISK, NOLINE IS NOT RESPONSIBLE FOR ANY LOSS OF IMPORTANT INFORMATION (can oly remove files inside the folder the os is in)")
-                print("tkNotepad - an aplication version of customCreate (the new faile will be in the same folder as the OS)")
+                print("tkNotepad - an aplication version of customCreate (the new file will be in the same folder as the OS)")
 
                 print("about - about this OS")
                 print("whatsNew - update documentation")
@@ -97,7 +98,7 @@ if Pin == SelectedPin:
                 print("NoLine")
                 print("A mini Opreating system.")
                 print("Doesnt Do Much")
-                print("ver 0.6")
+                print("[ver "+NoLineVer)
                 print(" ")
         elif command == "customOpen":
             print(" ")
@@ -161,24 +162,30 @@ if Pin == SelectedPin:
                 print("exited")
                 print(" ")
             else:
-                print(" ")
-                print("The filename will be " + response + ".txt")
-                print(" ")
-                newF = open(response + ".txt","x")
-                print(" ")
-                content = input("Input Content >")
-                newF.write(content)
-                newF.close()
-                print(" ")
-                print("Content has been saved.")
-                print(" ")
-                print("Content:")
-                f = open(response + ".txt","r")
-                print(f.read())
-                print(" ")
-                input("Waiting for an input so the OS can close the file...>")
+               
+                try:
+                    print(" ")
+                    print("The filename will be " + response + ".txt")
+                    print(" ")
+                    newF = open(response + ".txt","x")
+                    print(" ")
+                    content = input("Input Content >")
+                    newF.write(content)
+                    newF.close()
+                    print(" ")
+                    print("Content has been saved.")
+                    print(" ")
+                    print("Content:")
+                    f = open(response + ".txt","r")
+                    print(f.read())
+                    print(" ")
+                    input("Waiting for an input so the OS can close the file...>")
+                    f.close()
+                except:
+                    print("Somehow, the file name was invalid. Make sure you are not using CON, PRN, AUX, NUL, COM1, COM2, COM3, COM4, COM5, COM6, COM7, COM8, COM9, LPT1, LPT2, LPT3, LPT4, LPT5, LPT6, LPT7, LPT8, or LPT9.")
+                    print(" ")
 
-                f.close()
+                
         elif command == "customAppend":
             print(" ")
             entries = os.listdir(os.getcwd())
@@ -313,11 +320,12 @@ if Pin == SelectedPin:
         
 
         elif command == "whatsNew":
-            print("as of [2021-8-1][ver 0.6]")
+            print("as of [2021-8-1][ver " + NoLineVer)
             print("this command you are using has been added.")
             print("tkNotepad has been added. <help> for more info!")
-            print("bug fixes. (like crashing when opening a non-exsistant file)")
+            print("bug fixes. (like crashing when opening a non-exsistant file. [NEW FIX]when naming a file and invalid file name (eg: con), will now just show an error instead of crashing. )")
             print("tkNotepad Improved")
+            print("now NoLine will inculde bugfix versions.")
             print(" ")
         elif command == "exit":
             print("exiting...")
